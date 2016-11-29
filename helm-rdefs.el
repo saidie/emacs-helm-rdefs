@@ -39,7 +39,7 @@
       (flush-lines "^[:space:]*$")
       (while (re-search-forward "^ *\\([^ 0-9].*\\)?$" nil t 1)
         (beginning-of-line)
-        (delete-backward-char 1)
+        (delete-char -1)
         (just-one-space)))))
 
 (defun helm-rdefs--goto (candidate)
