@@ -5,8 +5,8 @@
 ;; Version: 1.0.0
 ;; Author: Hiroshi Saito <monodie@gmail.com>
 ;; URL: https://github.com/saidie/helm-rdefs
-;; Package-Requires: ((helm "1.6.4"))
-;; Keywords: ruby
+;; Package-Requires: ((emacs "24") (helm "1.6.4"))
+;; Keywords: matching, tools
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -21,6 +21,11 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+;;; Commentary:
+
+;; This package provides helm interface for rdefs.  Run `helm-rdefs' on ruby
+;; file.
+
 ;;; Code:
 
 (require 'helm)
@@ -29,9 +34,11 @@
 (defvar helm-rdefs--current-file)
 
 (defun helm-rdefs--exec-rdefs (path)
+  "Execute rdefs for file specified by `PATH'."
   (shell-command-to-string (format "%s -n %s" helm-rdefs-command path)))
 
 (defun helm-rdefs--init ()
+  "Initialize a candidate helm buffer with rdefs output for current file."
   (let ((buf (helm-init-candidates-in-buffer 'global
                (helm-rdefs--exec-rdefs helm-rdefs--current-file))))
     (with-current-buffer buf
@@ -43,6 +50,7 @@
         (just-one-space)))))
 
 (defun helm-rdefs--goto (candidate)
+  "Go to the line of `CANDIDATE'."
   (when (string-match "^ *\\([0-9]+\\):" candidate)
     (let ((line (string-to-number (match-string 1 candidate))))
       (goto-char (point-min))
@@ -56,6 +64,7 @@
 
 ;;;###autoload
 (defun helm-rdefs ()
+  "Open a helm buffer with rdefs output."
   (interactive)
   (setq helm-rdefs--current-file (buffer-file-name))
   (helm :sources '(helm-rdefs--source)
