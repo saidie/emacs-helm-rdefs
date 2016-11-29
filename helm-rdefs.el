@@ -6,6 +6,7 @@
 ;; Author: Hiroshi Saito <monodie@gmail.com>
 ;; URL: https://github.com/saidie/helm-rdefs
 ;; Package-Requires: ((helm "1.6.4"))
+;; Keywords: ruby
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
