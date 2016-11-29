@@ -25,11 +25,11 @@
 
 (require 'helm)
 
-(defvar helm-rdefs--command (executable-find "rdefs"))
+(defvar helm-rdefs-command (executable-find "rdefs"))
 (defvar helm-rdefs--current-file)
 
 (defun helm-rdefs--exec-rdefs (path)
-  (shell-command-to-string (format "%s -n %s" helm-rdefs--command path)))
+  (shell-command-to-string (format "%s -n %s" helm-rdefs-command path)))
 
 (defun helm-rdefs--init ()
   (let ((buf (helm-init-candidates-in-buffer 'global
