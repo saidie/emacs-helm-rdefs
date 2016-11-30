@@ -35,7 +35,10 @@
 
 (defun helm-rdefs--exec-rdefs (path)
   "Execute rdefs for file specified by `PATH'."
-  (shell-command-to-string (format "%s -n %s" helm-rdefs-command path)))
+  (with-temp-buffer
+    (unless (process-file helm-rdefs-command nil t nil "-n" path)
+      (error "Failed: '%s -n %s'" helm-rdefs-command path))
+    (buffer-string)))
 
 (defun helm-rdefs--init ()
   "Initialize a candidate helm buffer with rdefs output for current file."
